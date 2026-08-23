@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Present Mastery - Idíos Linguas</title>
+    <!-- Tailwind CSS with Dark Mode Class support -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0077b6',
+                            teal: '#2a9d8f',
+                            navy: '#16467d',
+                            yellow: '#ffb703',
+                            red: '#e63946'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fredoka:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti for rewards -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .blank-input {
+            border-bottom: 2px solid #94a3b8;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        .blank-input:focus {
+            outline: none;
+            border-bottom-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .correct-input {
+            border-bottom-color: #16a34a !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+        }
+        .incorrect-input {
+            border-bottom-color: #dc2626 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+        }
+        
+        /* Dark Mode Specific Field Styles */
+        .dark .blank-input {
+            border-bottom-color: #64748b;
+            color: #f8fafc;
+            background-color: transparent;
+        }
+        .dark .blank-input:focus {
+            border-bottom-color: #818cf8;
+            background-color: #1e1b4b;
+        }
+        .dark .correct-input {
+            border-bottom-color: #22c55e !important;
+            background-color: #052e16 !important;
+            color: #86efac !important;
+        }
+        .dark .incorrect-input {
+            border-bottom-color: #f43f5e !important;
+            background-color: #4c0519 !important;
+            color: #fca5a5 !important;
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #4f46e5;
+            color: #4f46e5;
+            font-weight: 700;
+        }
+        .dark .tab-active {
+            border-bottom: 3px solid #818cf8;
+            color: #818cf8;
+        }
+
+        .modal-animate-in {
+            animation: modalFadeIn 0.25s ease-out forwards;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <header class="bg-indigo-600 dark:bg-slate-900 text-white shadow-md sticky top-0 z-50 py-2 border-b border-indigo-700/50 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 flex flex-wrap items-center justify-between gap-2">
+            
+            <!-- Brand Logo & App Title -->
+            <div class="flex items-center space-x-3">
+                <div class="bg-white dark:bg-slate-800 p-1.5 rounded-xl shadow-inner flex items-center justify-center h-10 w-10 border border-indigo-200 dark:border-slate-700">
+                    <!-- Idíos Linguas Mini Vector Logo -->
+                    <svg viewBox="0 0 500 560" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 80,240 C 40,110 180,20 330,48 C 404,61 426,128 377,172 C 306,238 112,326 80,240 Z" fill="none" stroke="#e63946" stroke-width="20" stroke-linecap="round" />
+                        <path d="M 356,76 C 413,142 400,283 312,362 C 220,436 84,371 106,279" fill="none" stroke="#ffb703" stroke-width="18" stroke-linecap="round" />
+                        <path d="M 84,296 C 128,393 268,406 356,327" fill="none" stroke="#2a9d8f" stroke-width="18" stroke-linecap="round" />
+                        <circle cx="230" cy="200" r="110" fill="#ffffff" stroke="#0077b6" stroke-width="12"/>
+                        <ellipse cx="230" cy="200" rx="52" ry="110" fill="none" stroke="#0077b6" stroke-width="7"/>
+                        <line x1="120" y1="200" x2="340" y2="200" stroke="#0077b6" stroke-width="7"/>
+                        <g transform="translate(110, 100)">
+                            <path d="M 50,40 A 46,46 0 1 1 102,113 L 81,134 L 87,107 A 46,46 0 0 1 50,40 Z" fill="#0077b6"/>
+                            <text x="75" y="88" font-family="'Fredoka', sans-serif" font-weight="bold" font-size="44" fill="#ffffff" text-anchor="middle">i</text>
+                        </g>
+                        <g transform="translate(240, 150)">
+                            <path d="M 45,35 A 42,42 0 1 1 87,102 L 81,119 L 64,100 A 42,42 0 0 1 45,35 Z" fill="#2a9d8f"/>
+                            <text x="66" y="80" font-family="'Fredoka', sans-serif" font-weight="bold" font-size="40" fill="#ffffff" text-anchor="middle">l</text>
+                        </g>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-indigo-200 dark:text-teal-400 block -mb-0.5">Idíos Linguas</span>
+                    <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-1.5">
+                        Simple Present Lab
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Controls: Dark Mode, Score & Reset -->
+            <div class="flex items-center space-x-2">
+                <!-- Dark Mode Toggle Button -->
+                <button id="themeToggle" onclick="toggleDarkMode()" class="p-2 rounded-lg bg-indigo-700/60 dark:bg-slate-800 hover:bg-indigo-800 dark:hover:bg-slate-700 text-yellow-300 dark:text-yellow-400 transition-colors border border-indigo-500/30 dark:border-slate-700 flex items-center gap-1.5 text-xs font-semibold" title="Cambiar Modo Oscuro/Claro">
+                    <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+                    <span id="themeText" class="hidden sm:inline">Oscuro</span>
+                </button>
+
+                <!-- Global Score Tracker & Reset Button -->
+                <div class="flex items-center space-x-2 bg-indigo-700/60 dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-indigo-500/30 dark:border-slate-700 text-xs">
+                    <span class="text-indigo-200 dark:text-slate-400 font-semibold text-[11px]">Puntaje:</span>
+                    <span id="globalScore" class="font-extrabold text-yellow-300 text-xs">0 / 0</span>
+                    <button onclick="confirmResetAll()" class="ml-1 bg-indigo-800 hover:bg-indigo-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-indigo-100 dark:text-slate-200 px-2 py-0.5 rounded transition text-[11px] flex items-center gap-1 border border-indigo-600/50 dark:border-slate-600">
+                        <i class="fa-solid fa-rotate-left"></i> Reiniciar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Compact Navigation Tabs -->
+            <nav class="flex space-x-1 md:space-x-3 w-full md:w-auto pt-1 md:pt-0 overflow-x-auto text-xs border-t md:border-t-0 border-indigo-500/30 dark:border-slate-800">
+                <button id="tab-reading" onclick="switchTab('reading')" class="tab-btn py-1 px-2.5 text-indigo-100 dark:text-slate-300 hover:text-white flex items-center gap-1.5 whitespace-nowrap tab-active rounded-t-md">
+                    <i class="fa-solid fa-file-lines"></i> 1. Lectura
+                </button>
+                <button id="tab-comprehension" onclick="switchTab('comprehension')" class="tab-btn py-1 px-2.5 text-indigo-100 dark:text-slate-300 hover:text-white flex items-center gap-1.5 whitespace-nowrap rounded-t-md">
+                    <i class="fa-solid fa-circle-question"></i> 2. Comprensión
+                </button>
+                <button id="tab-grammar" onclick="switchTab('grammar')" class="tab-btn py-1 px-2.5 text-indigo-100 dark:text-slate-300 hover:text-white flex items-center gap-1.5 whitespace-nowrap rounded-t-md">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 3. Gramática
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Idíos Linguas Welcome Hero Banner -->
+        <div class="mb-6 p-6 rounded-2xl bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden border border-indigo-700/30">
+            <div class="flex items-center gap-5 z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-white p-2 rounded-2xl shadow-lg flex-shrink-0 flex items-center justify-center">
+                    <!-- Full Idíos Linguas Graphic Logo -->
+                    <svg viewBox="0 0 500 560" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 80,240 C 40,110 180,20 330,48 C 404,61 426,128 377,172 C 306,238 112,326 80,240 Z" fill="none" stroke="#e63946" stroke-width="20" stroke-linecap="round" />
+                        <path d="M 356,76 C 413,142 400,283 312,362 C 220,436 84,371 106,279" fill="none" stroke="#ffb703" stroke-width="18" stroke-linecap="round" />
+                        <path d="M 84,296 C 128,393 268,406 356,327" fill="none" stroke="#2a9d8f" stroke-width="18" stroke-linecap="round" />
+                        <circle cx="230" cy="200" r="110" fill="#ffffff" stroke="#0077b6" stroke-width="12"/>
+                        <ellipse cx="230" cy="200" rx="52" ry="110" fill="none" stroke="#0077b6" stroke-width="7"/>
+                        <line x1="120" y1="200" x2="340" y2="200" stroke="#0077b6" stroke-width="7"/>
+                        <g transform="translate(110, 100)">
+                            <path d="M 50,40 A 46,46 0 1 1 102,113 L 81,134 L 87,107 A 46,46 0 0 1 50,40 Z" fill="#0077b6"/>
+                            <text x="75" y="88" font-family="'Fredoka', sans-serif" font-weight="bold" font-size="44" fill="#ffffff" text-anchor="middle">i</text>
+                        </g>
+                        <g transform="translate(240, 150)">
+                            <path d="M 45,35 A 42,42 0 1 1 87,102 L 81,119 L 64,100 A 42,42 0 0 1 45,35 Z" fill="#2a9d8f"/>
+                            <text x="66" y="80" font-family="'Fredoka', sans-serif" font-weight="bold" font-size="40" fill="#ffffff" text-anchor="middle">l</text>
+                        </g>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-black tracking-widest text-teal-300 uppercase">Idíos Linguas</span>
+                        <span class="bg-teal-500/20 text-teal-200 text-[10px] px-2 py-0.5 rounded-full border border-teal-400/30 font-semibold">Academia de Idiomas</span>
+                    </div>
+                    <h2 class="text-xl md:text-2xl font-extrabold text-white mt-0.5">Simple Present Mastery</h2>
+                    <p class="text-xs md:text-sm text-indigo-200 mt-1 max-w-xl leading-relaxed">
+                        Desarrolla tu fluidez gramatical y comprensión lectora con nuestra plataforma interactiva.
+                    </p>
+                </div>
+            </div>
+            <!-- Decorative Accent -->
+            <div class="hidden lg:block opacity-15 absolute -right-10 -bottom-10 pointer-events-none">
+                <i class="fa-solid fa-language text-9xl"></i>
+            </div>
+        </div>
+
+        <!-- Global Instructions Box -->
+        <div class="bg-blue-50 dark:bg-blue-950/40 border-l-4 border-blue-500 dark:border-blue-400 p-4 rounded-r-xl shadow-sm mb-8 flex items-start gap-3 transition-colors">
+            <i class="fa-solid fa-circle-info text-blue-500 dark:text-blue-400 text-xl mt-0.5"></i>
+            <div>
+                <h3 class="font-bold text-blue-900 dark:text-blue-200">¿Cómo funciona?</h3>
+                <p class="text-sm text-blue-800 dark:text-blue-300">
+                    Completa la lectura conjugando los verbos entre paréntesis en <strong>Presente Simple</strong>. Ten en cuenta las reglas de la tercera persona (<em>he, she, it</em>) y las formas negativas (<em>don't / doesn't</em>). Luego, demuestra tu comprensión e intenta los ejercicios de gramática.
+                </p>
+            </div>
+        </div>
+
+        <!-- SECTION 1: READING PASSAGE -->
+        <section id="section-reading" class="tab-content space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 md:p-8 border border-slate-200 dark:border-slate-700 transition-colors">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+                    <div>
+                        <span class="text-xs font-semibold uppercase text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-1 rounded-full border border-indigo-100 dark:border-indigo-900">Texto Narrativo</span>
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mt-1">Elena's Daily Life in the Coastal Village</h2>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="toggleHints('reading')" class="text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold px-3 py-2 rounded-lg transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-lightbulb text-yellow-500"></i> Pistas de Reglas
+                        </button>
+                        <button onclick="checkReadingAnswers()" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold px-5 py-2 rounded-lg shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-check"></i> Verificar Lectura
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hints Box (Collapsible) -->
+                <div id="reading-hints" class="hidden mb-6 p-4 bg-amber-50 dark:bg-amber-950/40 rounded-xl border border-amber-200 dark:border-amber-800/60 text-sm text-amber-900 dark:text-amber-200 space-y-1">
+                    <p class="font-bold mb-1"><i class="fa-solid fa-key"></i> Recordatorio Gramatical para Presente Simple:</p>
+                    <ul class="list-disc list-inside space-y-1 text-xs md:text-sm">
+                        <li><strong>Afirmativo (I, You, We, They):</strong> Verbo en forma base (Ej: <em>play, work</em>).</li>
+                        <li><strong>Afirmativo (He, She, It):</strong> Añade <strong>-s</strong> (<em>works</em>), <strong>-es</strong> para verbos terminados en -o,-ch,-sh,-ss,-x,-z (<em>watches, goes</em>) o cambia -y a <strong>-ies</strong> si hay consonante antes (<em>studies</em>).</li>
+                        <li><strong>Negativo:</strong> Usa <strong>don't + verbo base</strong> (I/you/we/they) o <strong>doesn't + verbo base</strong> (he/she/it).</li>
+                    </ul>
+                </div>
+
+                <!-- 6 Paragraphs Story with Input Blanks -->
+                <div class="space-y-6 text-slate-700 dark:text-slate-200 leading-relaxed text-base md:text-lg">
+                    
+                    <!-- Paragraph 1 -->
+                    <p class="bg-slate-50/50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-700/60">
+                        <span class="font-bold text-indigo-600 dark:text-indigo-400 mr-1">1.</span>
+                        Elena <input type="text" id="r1" data-answer="is" class="blank-input px-2 py-0.5 text-center w-20 mx-1" placeholder="(be)"> a talented wildlife photographer who 
+                        <input type="text" id="r2" data-answer="lives" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(live)"> in a small coastal village. Every morning, she 
+                        <input type="text" id="r3" data-answer="wakes up" class="blank-input px-2 py-0.5 text-center w-32 mx-1" placeholder="(wake up)"> early at 5:00 AM because wild animals 
+                        <input type="text" id="r4" data-answer="are" class="blank-input px-2 py-0.5 text-center w-20 mx-1" placeholder="(be)"> active at dawn. She 
+                        <input type="text" id="r5" data-answer="drinks" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(drink)"> a hot cup of tea and 
+                        <input type="text" id="r6" data-answer="prepares" class="blank-input px-2 py-0.5 text-center w-32 mx-1" placeholder="(prepare)"> her heavy camera equipment.
+                    </p>
+
+                    <!-- Paragraph 2 -->
+                    <p class="bg-slate-50/50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-700/60">
+                        <span class="font-bold text-indigo-600 dark:text-indigo-400 mr-1">2.</span>
+                        Her friendly dog, Max, always <input type="text" id="r7" data-answer="runs" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(run)"> to the front door when he 
+                        <input type="text" id="r8" data-answer="hears" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(hear)"> her keys. Max 
+                        <input type="text" id="r9" data-answer="doesn't like" data-alt="does not like" class="blank-input px-2 py-0.5 text-center w-36 mx-1" placeholder="(not/like)"> to stay home alone, so Elena usually 
+                        <input type="text" id="r10" data-answer="takes" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(take)"> him on her outdoor expeditions. Together, they 
+                        <input type="text" id="r11" data-answer="walk" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(walk)"> down to the quiet beach before the sun 
+                        <input type="text" id="r12" data-answer="rises" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(rise)">.
+                    </p>
+
+                    <!-- Paragraph 3 -->
+                    <p class="bg-slate-50/50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-700/60">
+                        <span class="font-bold text-indigo-600 dark:text-indigo-400 mr-1">3.</span>
+                        Near the water, Elena <input type="text" id="r13" data-answer="watches" class="blank-input px-2 py-0.5 text-center w-32 mx-1" placeholder="(watch)"> the seagulls while Max 
+                        <input type="text" id="r14" data-answer="chases" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(chase)"> tiny crabs along the wet sand. Elena 
+                        <input type="text" id="r15" data-answer="knows" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(know)"> a lot about local wildlife behavior. She 
+                        <input type="text" id="r16" data-answer="studies" class="blank-input px-2 py-0.5 text-center w-32 mx-1" placeholder="(study)"> nature biology books every evening so that she 
+                        <input type="text" id="r17" data-answer="understands" class="blank-input px-2 py-0.5 text-center w-36 mx-1" placeholder="(understand)"> where to locate rare migrating birds.
+                    </p>
+
+                    <!-- Paragraph 4 -->
+                    <p class="bg-slate-50/50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-700/60">
+                        <span class="font-bold text-indigo-600 dark:text-indigo-400 mr-1">4.</span>
+                        At noon, they <input type="text" id="r18" data-answer="visit" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(visit)"> a warm local cafe. The barista, Marco, 
+                        <input type="text" id="r19" data-answer="serves" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(serve)"> them delicious fresh pastries and water. Marco often 
+                        <input type="text" id="r20" data-answer="asks" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(ask)"> Elena about her photos. "Do you 
+                        <input type="text" id="r21" data-answer="see" class="blank-input px-2 py-0.5 text-center w-24 mx-1" placeholder="(see)"> any dolphins today?" he queries with excitement. Elena 
+                        <input type="text" id="r22" data-answer="smiles" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(smile)"> and 
+                        <input type="text" id="r23" data-answer="shows" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(show)"> him her camera display screen.
+                    </p>
+
+                    <!-- Paragraph 5 -->
+                    <p class="bg-slate-50/50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-700/60">
+                        <span class="font-bold text-indigo-600 dark:text-indigo-400 mr-1">5.</span>
+                        In the afternoon, Elena <input type="text" id="r24" data-answer="doesn't spend" data-alt="does not spend" class="blank-input px-2 py-0.5 text-center w-36 mx-1" placeholder="(not/spend)"> much time outdoors if it 
+                        <input type="text" id="r25" data-answer="rains" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(rain)">. Instead, she 
+                        <input type="text" id="r26" data-answer="edits" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(edit)"> her digital pictures on her computer and 
+                        <input type="text" id="r27" data-answer="writes" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(write)"> articles for environmental magazines. Her chief editor 
+                        <input type="text" id="r28" data-answer="loves" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(love)"> her articles because she 
+                        <input type="text" id="r29" data-answer="captures" class="blank-input px-2 py-0.5 text-center w-32 mx-1" placeholder="(capture)"> authentic natural moments.
+                    </p>
+
+                    <!-- Paragraph 6 -->
+                    <p class="bg-slate-50/50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-100 dark:border-slate-700/60">
+                        <span class="font-bold text-indigo-600 dark:text-indigo-400 mr-1">6.</span>
+                        At night, Elena and her family <input type="text" id="r30" data-answer="eat" class="blank-input px-2 py-0.5 text-center w-24 mx-1" placeholder="(eat)"> dinner together at home. They 
+                        <input type="text" id="r31" data-answer="talk" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(talk)"> about their daily experiences, and her younger brother 
+                        <input type="text" id="r32" data-answer="plays" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(play)"> classical guitar. Elena 
+                        <input type="text" id="r33" data-answer="feels" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(feel)"> deeply peaceful and content with her routine. She 
+                        <input type="text" id="r34" data-answer="goes" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(go)"> to bed early because another exciting adventure 
+                        <input type="text" id="r35" data-answer="starts" class="blank-input px-2 py-0.5 text-center w-28 mx-1" placeholder="(start)"> tomorrow morning!
+                    </p>
+
+                </div>
+
+                <!-- Bottom Action Bar -->
+                <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div id="readingScoreFeedback" class="text-sm font-semibold text-slate-600 dark:text-slate-300">
+                        Espacios completados: <span id="readingCompletedCount" class="text-indigo-600 dark:text-indigo-400 font-bold">0</span> / 35
+                    </div>
+                    <button onclick="checkReadingAnswers()" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition">
+                        <i class="fa-solid fa-check-double mr-2"></i> Evaluar Lectura (35 puntos)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: READING COMPREHENSION -->
+        <section id="section-comprehension" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 md:p-8 border border-slate-200 dark:border-slate-700 transition-colors">
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100 dark:border-slate-700">
+                    <div>
+                        <span class="text-xs font-semibold uppercase text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-100 dark:border-emerald-900">Evaluación de Lectura</span>
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mt-1">Preguntas de Comprensión Lectora</h2>
+                    </div>
+                    <span class="text-sm font-bold text-slate-500 dark:text-slate-400">10 Preguntas</span>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Q1 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">1. What time does Elena wake up every morning?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc1" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) At 7:00 AM after sunrise</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc1" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) At 5:00 AM because animals are active</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc1" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) At 12:00 PM for lunch</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-1" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">2. Why does Max the dog go with Elena on her expeditions?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc2" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) Because he does not like to stay home alone</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc2" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) Because he hunts crabs to sell at the market</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc2" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) Because Marco the barista asks to see him</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-2" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">3. What does Elena study every evening to help her work?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc3" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) Italian cooking recipe books</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc3" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) Nature biology books about animal behavior</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc3" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) Guitar music sheets</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-3" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">4. What does Elena do in the afternoon if it rains?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc4" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) She walks on the beach with Max</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc4" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) She edits photos and writes articles on her computer</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc4" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) She plays the classical guitar with her brother</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-4" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">5. Why does her magazine editor love her work?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc5" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) Because she captures authentic natural moments</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc5" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) Because she sells pastries at the cafe</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc5" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) Because she sleeps late every day</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-5" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">6. What does Max do on the beach while Elena watches seagulls?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc6" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) He sleeps under a palm tree</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc6" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) He chases tiny crabs along the wet sand</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc6" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) He swims in the deep ocean water</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-6" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">7. Who is Marco and what is his role in the story?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc7" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) Elena's younger brother who plays guitar</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc7" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) A local cafe barista who serves fresh pastries</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc7" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) An editor for an environmental magazine</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-7" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">8. Who plays the classical guitar at home during the evening?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc8" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) Elena's younger brother</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc8" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) Marco the barista</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc8" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) Elena's father</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-8" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">9. What warm drink does Elena have early in the morning?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc9" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) A cup of hot coffee</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc9" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) A hot cup of tea</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc9" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) A glass of warm milk</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-9" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+
+                    <!-- Q10 -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/40 space-y-3">
+                        <p class="font-semibold text-slate-800 dark:text-slate-100 text-lg">10. How does Elena feel about her daily routine at night?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc10" value="A" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">A) Bored and tired of living in the village</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc10" value="B" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">B) Deeply peaceful and content</span>
+                            </label>
+                            <label class="comp-option flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-slate-700 transition">
+                                <input type="radio" name="qc10" value="C" class="mr-3 text-indigo-600">
+                                <span class="dark:text-slate-200">C) Anxious and unhappy about waking up early</span>
+                            </label>
+                        </div>
+                        <div id="comp-fb-10" class="hidden text-sm font-medium mt-2 p-2 rounded-lg"></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-end">
+                    <button onclick="checkComprehensionAnswers()" class="bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition">
+                        <i class="fa-solid fa-clipboard-check mr-2"></i> Evaluar Comprensión (10 puntos)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: GRAMMAR PRACTICE -->
+        <section id="section-grammar" class="tab-content hidden space-y-8">
+            
+            <!-- Block A: Affirmative Third Person Conjugation Rules (10 Items) -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 md:p-8 border border-slate-200 dark:border-slate-700 transition-colors">
+                <div class="flex items-center space-x-3 mb-4 pb-2 border-b border-slate-100 dark:border-slate-700">
+                    <span class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-extrabold px-3 py-1 rounded-lg text-sm">Parte A</span>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Afirmaciones (Reglas ortográficas: -s, -es, -ies) &bull; 10 Preguntas</h3>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">Escribe la forma correcta del verbo en 3ra persona del singular (He / She / It):</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">1. She _____ (teach) English.</span>
+                        <input type="text" id="g_aff_1" data-answer="teaches" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">2. He _____ (fly) helicopters.</span>
+                        <input type="text" id="g_aff_2" data-answer="flies" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">3. The dog _____ (fix) its bed.</span>
+                        <input type="text" id="g_aff_3" data-answer="fixes" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">4. My sister _____ (enjoy) music.</span>
+                        <input type="text" id="g_aff_4" data-answer="enjoys" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">5. A chef _____ (cook) meals.</span>
+                        <input type="text" id="g_aff_5" data-answer="cooks" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">6. He _____ (wash) his car.</span>
+                        <input type="text" id="g_aff_6" data-answer="washes" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">7. The baby _____ (cry) at night.</span>
+                        <input type="text" id="g_aff_7" data-answer="cries" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">8. She _____ (go) to the gym.</span>
+                        <input type="text" id="g_aff_8" data-answer="goes" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">9. My uncle _____ (pass) by home.</span>
+                        <input type="text" id="g_aff_9" data-answer="passes" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <span class="font-medium text-slate-700 dark:text-slate-200">10. He _____ (study) biology.</span>
+                        <input type="text" id="g_aff_10" data-answer="studies" class="blank-input px-3 py-1 text-center w-32 ml-2" placeholder="conjugate">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block B: Negative Forms (don't / doesn't) (10 Items) -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 md:p-8 border border-slate-200 dark:border-slate-700 transition-colors">
+                <div class="flex items-center space-x-3 mb-4 pb-2 border-b border-slate-100 dark:border-slate-700">
+                    <span class="bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-extrabold px-3 py-1 rounded-lg text-sm">Parte B</span>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Negaciones (don't / doesn't + verbo base) &bull; 10 Preguntas</h3>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">Transforma las oraciones a su forma negativa usando contracciones (don't / doesn't):</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">1. Marco (not / work) on Sundays.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>Marco</span>
+                            <input type="text" id="g_neg_1" data-answer="doesn't work" data-alt="does not work" class="blank-input px-2 py-1 text-center w-36" placeholder="not/work">
+                            <span>on Sundays.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">2. They (not / eat) meat.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>They</span>
+                            <input type="text" id="g_neg_2" data-answer="don't eat" data-alt="do not eat" class="blank-input px-2 py-1 text-center w-36" placeholder="not/eat">
+                            <span>meat.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">3. I (not / like) cold rain.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>I</span>
+                            <input type="text" id="g_neg_3" data-answer="don't like" data-alt="do not like" class="blank-input px-2 py-1 text-center w-36" placeholder="not/like">
+                            <span>cold rain.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">4. She (not / wake up) late.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>She</span>
+                            <input type="text" id="g_neg_4" data-answer="doesn't wake up" data-alt="does not wake up" class="blank-input px-2 py-1 text-center w-36" placeholder="not/wake up">
+                            <span>late.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">5. We (not / play) games.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>We</span>
+                            <input type="text" id="g_neg_5" data-answer="don't play" data-alt="do not play" class="blank-input px-2 py-1 text-center w-36" placeholder="not/play">
+                            <span>games.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">6. Max (not / enjoy) staying alone.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>Max</span>
+                            <input type="text" id="g_neg_6" data-answer="doesn't enjoy" data-alt="does not enjoy" class="blank-input px-2 py-1 text-center w-36" placeholder="not/enjoy">
+                            <span>staying alone.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">7. You (not / know) the code.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>You</span>
+                            <input type="text" id="g_neg_7" data-answer="don't know" data-alt="do not know" class="blank-input px-2 py-1 text-center w-36" placeholder="not/know">
+                            <span>the code.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">8. He (not / drink) coffee.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>He</span>
+                            <input type="text" id="g_neg_8" data-answer="doesn't drink" data-alt="does not drink" class="blank-input px-2 py-1 text-center w-36" placeholder="not/drink">
+                            <span>coffee.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">9. Birds (not / fly) at night.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>Birds</span>
+                            <input type="text" id="g_neg_9" data-answer="don't fly" data-alt="do not fly" class="blank-input px-2 py-1 text-center w-36" placeholder="not/fly">
+                            <span>at night.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-2">
+                        <span class="font-medium text-slate-700 dark:text-slate-200 text-xs md:text-sm">10. She (not / write) novels.</span>
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-slate-800 dark:text-slate-200">
+                            <span>She</span>
+                            <input type="text" id="g_neg_10" data-answer="doesn't write" data-alt="does not write" class="blank-input px-2 py-1 text-center w-36" placeholder="not/write">
+                            <span>novels.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block C: Question Formation (Do / Does) (10 Items) -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 md:p-8 border border-slate-200 dark:border-slate-700 transition-colors">
+                <div class="flex items-center space-x-3 mb-4 pb-2 border-b border-slate-100 dark:border-slate-700">
+                    <span class="bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-extrabold px-3 py-1 rounded-lg text-sm">Parte C</span>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Creación de Preguntas (Do / Does + sujeto + verbo) &bull; 10 Preguntas</h3>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">Completa las preguntas con el auxiliar correcto (Do/Does) y el verbo base adecuado:</p>
+
+                <div class="space-y-3">
+                    <!-- Item 1 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>1.</span>
+                        <input type="text" id="g_q1_aux" data-answer="Does" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>Elena</span>
+                        <input type="text" id="g_q1_verb" data-answer="live" class="blank-input px-2 py-1 text-center w-24" placeholder="(live)">
+                        <span>in a coastal village?</span>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>2.</span>
+                        <input type="text" id="g_q2_aux" data-answer="Do" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>the seagulls</span>
+                        <input type="text" id="g_q2_verb" data-answer="fly" class="blank-input px-2 py-1 text-center w-24" placeholder="(fly)">
+                        <span>near the ocean beach?</span>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>3.</span>
+                        <input type="text" id="g_q3_aux" data-answer="Does" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>he</span>
+                        <input type="text" id="g_q3_verb" data-answer="play" class="blank-input px-2 py-1 text-center w-24" placeholder="(play)">
+                        <span>the acoustic guitar at night?</span>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>4.</span>
+                        <input type="text" id="g_q4_aux" data-answer="Do" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>you</span>
+                        <input type="text" id="g_q4_verb" data-answer="see" class="blank-input px-2 py-1 text-center w-24" placeholder="(see)">
+                        <span>wild animals in the morning?</span>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>5.</span>
+                        <input type="text" id="g_q5_aux" data-answer="Does" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>Marco</span>
+                        <input type="text" id="g_q5_verb" data-answer="serve" class="blank-input px-2 py-1 text-center w-24" placeholder="(serve)">
+                        <span>fresh pastries at noon?</span>
+                    </div>
+                    <!-- Item 6 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>6.</span>
+                        <input type="text" id="g_q6_aux" data-answer="Do" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>they</span>
+                        <input type="text" id="g_q6_verb" data-answer="eat" class="blank-input px-2 py-1 text-center w-24" placeholder="(eat)">
+                        <span>dinner together at home?</span>
+                    </div>
+                    <!-- Item 7 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>7.</span>
+                        <input type="text" id="g_q7_aux" data-answer="Does" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>she</span>
+                        <input type="text" id="g_q7_verb" data-answer="edit" class="blank-input px-2 py-1 text-center w-24" placeholder="(edit)">
+                        <span>her photos on the computer?</span>
+                    </div>
+                    <!-- Item 8 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>8.</span>
+                        <input type="text" id="g_q8_aux" data-answer="Do" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>we</span>
+                        <input type="text" id="g_q8_verb" data-answer="study" class="blank-input px-2 py-1 text-center w-24" placeholder="(study)">
+                        <span>nature biology books?</span>
+                    </div>
+                    <!-- Item 9 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>9.</span>
+                        <input type="text" id="g_q9_aux" data-answer="Does" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>Max</span>
+                        <input type="text" id="g_q9_verb" data-answer="chase" class="blank-input px-2 py-1 text-center w-24" placeholder="(chase)">
+                        <span>crabs on the wet sand?</span>
+                    </div>
+                    <!-- Item 10 -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-2 text-slate-800 dark:text-slate-200 font-medium text-xs md:text-sm">
+                        <span>10.</span>
+                        <input type="text" id="g_q10_aux" data-answer="Does" class="blank-input px-2 py-1 text-center w-20" placeholder="Do/Does">
+                        <span>the sun</span>
+                        <input type="text" id="g_q10_verb" data-answer="rise" class="blank-input px-2 py-1 text-center w-24" placeholder="(rise)">
+                        <span>early in the morning?</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-end">
+                    <button onclick="checkGrammarAnswers()" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Evaluar Gramática (30 puntos)
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Custom Dialog Modal (Replaces alert and confirm) -->
+    <div id="customModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 max-w-md w-full p-6 modal-animate-in text-slate-800 dark:text-slate-100 space-y-4">
+            <div class="flex items-center space-x-3">
+                <div id="modalIconBg" class="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center flex-shrink-0">
+                    <i id="modalIcon" class="fa-solid fa-circle-info text-indigo-600 dark:text-indigo-400 text-2xl"></i>
+                </div>
+                <div>
+                    <h4 id="modalTitle" class="text-lg font-bold text-slate-900 dark:text-white">Notificación</h4>
+                    <span id="modalBadge" class="text-[10px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">Idíos Linguas</span>
+                </div>
+            </div>
+            <p id="modalMessage" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-700" id="modalActions">
+                <button id="modalCancelBtn" onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition hidden">
+                    Cancelar
+                </button>
+                <button id="modalConfirmBtn" onclick="closeModal()" class="px-5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white transition">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 dark:bg-slate-950 text-slate-400 dark:text-slate-500 py-6 border-t border-slate-800 dark:border-slate-900 text-center text-xs transition-colors">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-2">
+                <span class="font-bold text-slate-200">Idíos Linguas</span>
+                <span>&bull; Simple Present Learning App</span>
+            </div>
+            <p class="text-slate-500 dark:text-slate-600">Asegúrate de revisar las contracciones e ingresar los verbos en minúscula.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Store Scores
+        const scores = {
+            reading: 0,
+            comprehension: 0,
+            grammar: 0
+        };
+
+        const maxScores = {
+            reading: 35,
+            comprehension: 10,
+            grammar: 30
+        };
+
+        // Correct Comprehension Key (10 Questions)
+        const compAnswers = {
+            qc1: "B",
+            qc2: "A",
+            qc3: "B",
+            qc4: "B",
+            qc5: "A",
+            qc6: "B",
+            qc7: "B",
+            qc8: "A",
+            qc9: "B",
+            qc10: "B"
+        };
+
+        // Custom Modal Logic (Replacing system alert & confirm)
+        function showModal(title, message, iconClass = "fa-solid fa-circle-info", isConfirm = false, onConfirmCallback = null) {
+            const modal = document.getElementById('customModal');
+            const titleEl = document.getElementById('modalTitle');
+            const msgEl = document.getElementById('modalMessage');
+            const iconEl = document.getElementById('modalIcon');
+            const cancelBtn = document.getElementById('modalCancelBtn');
+            const confirmBtn = document.getElementById('modalConfirmBtn');
+
+            titleEl.innerText = title;
+            msgEl.innerText = message;
+            iconEl.className = iconClass + " text-2xl text-indigo-600 dark:text-indigo-400";
+
+            if (isConfirm) {
+                cancelBtn.classList.remove('hidden');
+                confirmBtn.innerText = "Sí, continuar";
+                confirmBtn.onclick = function() {
+                    closeModal();
+                    if (typeof onConfirmCallback === 'function') onConfirmCallback();
+                };
+            } else {
+                cancelBtn.classList.add('hidden');
+                confirmBtn.innerText = "Entendido";
+                confirmBtn.onclick = function() {
+                    closeModal();
+                };
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
+        // Dark Mode Logic
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                icon.className = 'fa-solid fa-moon text-sm';
+                text.innerText = 'Oscuro';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                icon.className = 'fa-solid fa-sun text-sm text-yellow-400';
+                text.innerText = 'Claro';
+            }
+        }
+
+        // Initialize Theme from Local Storage or System Preferences
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-sm text-yellow-400';
+                document.getElementById('themeText').innerText = 'Claro';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-sm';
+                document.getElementById('themeText').innerText = 'Oscuro';
+            }
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('tab-active'));
+
+            document.getElementById(`section-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('tab-active');
+        }
+
+        // Toggle Hints Box
+        function toggleHints(section) {
+            const hintsBox = document.getElementById(`${section}-hints`);
+            if (hintsBox) {
+                hintsBox.classList.toggle('hidden');
+            }
+        }
+
+        // Helper to normalize strings for forgiving comparison
+        function cleanString(str) {
+            return str.trim().toLowerCase().replace(/['’]/g, "'");
+        }
+
+        // 1. Check Reading Answers
+        function checkReadingAnswers() {
+            let correctCount = 0;
+            let filledCount = 0;
+
+            for (let i = 1; i <= 35; i++) {
+                const input = document.getElementById(`r${i}`);
+                if (!input) continue;
+
+                const userVal = cleanString(input.value);
+                const targetVal = cleanString(input.getAttribute('data-answer'));
+                const altVal = input.getAttribute('data-alt') ? cleanString(input.getAttribute('data-alt')) : null;
+
+                if (userVal !== "") filledCount++;
+
+                if (userVal === targetVal || (altVal && userVal === altVal)) {
+                    correctCount++;
+                    input.classList.remove('incorrect-input');
+                    input.classList.add('correct-input');
+                } else if (userVal !== "") {
+                    input.classList.remove('correct-input');
+                    input.classList.add('incorrect-input');
+                } else {
+                    input.classList.remove('correct-input', 'incorrect-input');
+                }
+            }
+
+            scores.reading = correctCount;
+            document.getElementById('readingCompletedCount').innerText = filledCount;
+            updateGlobalScore();
+
+            if (correctCount === maxScores.reading) {
+                triggerConfetti();
+                showModal("¡Lectura Perfecta!", "¡Felicidades! Completaste perfectamente toda la lectura en Presente Simple.", "fa-solid fa-trophy");
+            } else {
+                showModal("Evaluación de Lectura", `Obtuviste ${correctCount} de ${maxScores.reading} aciertos.`, "fa-solid fa-chart-line");
+            }
+        }
+
+        // 2. Check Comprehension Answers (10 Questions)
+        function checkComprehensionAnswers() {
+            let correctCount = 0;
+
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="qc${i}"]:checked`);
+                const fb = document.getElementById(`comp-fb-${i}`);
+                if (!fb) continue;
+                fb.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'dark:bg-emerald-950', 'dark:text-emerald-300', 'dark:bg-rose-950', 'dark:text-rose-300');
+
+                if (selected) {
+                    if (selected.value === compAnswers[`qc${i}`]) {
+                        correctCount++;
+                        fb.innerText = "¡Correcto!";
+                        fb.classList.add('bg-green-100', 'text-green-800', 'dark:bg-emerald-950', 'dark:text-emerald-300');
+                    } else {
+                        fb.innerText = `Incorrecto. La opción correcta es (${compAnswers[`qc${i}`]}).`;
+                        fb.classList.add('bg-red-100', 'text-red-800', 'dark:bg-rose-950', 'dark:text-rose-300');
+                    }
+                } else {
+                    fb.innerText = "Por favor selecciona una respuesta.";
+                    fb.classList.add('bg-red-100', 'text-red-800', 'dark:bg-rose-950', 'dark:text-rose-300');
+                }
+            }
+
+            scores.comprehension = correctCount;
+            updateGlobalScore();
+
+            if (correctCount === maxScores.comprehension) {
+                triggerConfetti();
+            }
+            showModal("Comprensión Lectora", `Resultado: ${correctCount} de 10 respuestas correctas.`, "fa-solid fa-list-check");
+        }
+
+        // 3. Check Grammar Answers (30 Total Questions)
+        function checkGrammarAnswers() {
+            let correctCount = 0;
+
+            // Part A Check (10 items)
+            for (let i = 1; i <= 10; i++) {
+                const input = document.getElementById(`g_aff_${i}`);
+                if (input && checkField(input)) correctCount++;
+            }
+
+            // Part B Check (10 items)
+            for (let i = 1; i <= 10; i++) {
+                const input = document.getElementById(`g_neg_${i}`);
+                if (input && checkField(input)) correctCount++;
+            }
+
+            // Part C Check (10 questions, each requires both aux and verb correct)
+            for (let i = 1; i <= 10; i++) {
+                const auxInput = document.getElementById(`g_q${i}_aux`);
+                const verbInput = document.getElementById(`g_q${i}_verb`);
+                const isAuxOk = auxInput ? checkField(auxInput) : false;
+                const isVerbOk = verbInput ? checkField(verbInput) : false;
+
+                if (isAuxOk && isVerbOk) {
+                    correctCount++;
+                }
+            }
+
+            scores.grammar = correctCount;
+            updateGlobalScore();
+
+            if (correctCount === 30) {
+                triggerConfetti();
+                showModal("¡Gramática Dominada!", "¡Excelente! Has respondido correctamente las 30 preguntas de gramática.", "fa-solid fa-wand-magic-sparkles");
+            } else {
+                showModal("Práctica Gramatical", `Obtuviste ${correctCount} de 30 puntos en la sección de gramática.`, "fa-solid fa-graduation-cap");
+            }
+        }
+
+        // Helper to validate single grammar field
+        function checkField(input) {
+            const userVal = cleanString(input.value);
+            const targetVal = cleanString(input.getAttribute('data-answer'));
+            const altVal = input.getAttribute('data-alt') ? cleanString(input.getAttribute('data-alt')) : null;
+
+            if (userVal === targetVal || (altVal && userVal === altVal)) {
+                input.classList.remove('incorrect-input');
+                input.classList.add('correct-input');
+                return true;
+            } else {
+                input.classList.remove('correct-input');
+                input.classList.add('incorrect-input');
+                return false;
+            }
+        }
+
+        // Global Score & Reset Logic
+        function updateGlobalScore() {
+            const totalScore = scores.reading + scores.comprehension + scores.grammar;
+            const totalMax = maxScores.reading + maxScores.comprehension + maxScores.grammar;
+            document.getElementById('globalScore').innerText = `${totalScore} / ${totalMax}`;
+        }
+
+        function confirmResetAll() {
+            showModal(
+                "Reiniciar Aplicación", 
+                "¿Deseas reiniciar todas tus respuestas y los puntajes acumulados?", 
+                "fa-solid fa-rotate-left", 
+                true, 
+                function() {
+                    document.querySelectorAll('input[type="text"]').forEach(input => {
+                        input.value = '';
+                        input.classList.remove('correct-input', 'incorrect-input');
+                    });
+                    document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+                    document.querySelectorAll('[id^="comp-fb-"]').forEach(fb => fb.classList.add('hidden'));
+
+                    scores.reading = 0;
+                    scores.comprehension = 0;
+                    scores.grammar = 0;
+                    document.getElementById('readingCompletedCount').innerText = '0';
+                    updateGlobalScore();
+                }
+            );
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // On Page Load Initialization
+        window.onload = function() {
+            initTheme();
+            updateGlobalScore();
+        };
+    </script>
+</body>
+</html>
